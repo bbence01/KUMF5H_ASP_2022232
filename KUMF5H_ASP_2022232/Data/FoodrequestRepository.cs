@@ -44,7 +44,7 @@ namespace KUMF5H_ASP_2022232.Data
         }
 
 
-        public IEnumerable<FoodRequest> GetPurchasedItems(string userId)
+        public IEnumerable<FoodRequest> SeeAcceptedOffers(string userId)
         {
             return this.GetAll().Where(p => p.IsDone && p.Contractor != null && p.Contractor.Id == userId);
         }

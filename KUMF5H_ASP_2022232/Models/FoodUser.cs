@@ -20,6 +20,9 @@ namespace KUMF5H_ASP_2022232.Models
         public string LastName { get; set; }
 
 
+        public int Founds { get; set; }
+
+
 
         [NotMapped]
         [JsonIgnore]

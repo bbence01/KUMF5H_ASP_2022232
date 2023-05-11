@@ -73,7 +73,8 @@ namespace KUMF5H_ASP_2022232.Data
                     EmailConfirmed = true,
                     UserName = "seedplayer@gmail.com",
                     FoodUserName = "SeedPlayer",
-                    NormalizedUserName = "SEEDPLAYER@gmail.com"
+                    NormalizedUserName = "SEEDPLAYER@gmail.com",
+                    Founds = 10000
                 };
                 seed.PasswordHash = ph.HashPassword(seed, "almafa123");
                 var hasher = new PasswordHasher<FoodUser>();
@@ -87,7 +88,8 @@ namespace KUMF5H_ASP_2022232.Data
                     FoodUserName = "bence@gmail.com",
                     FirstName = "Bence",
                     LastName = "Bognár",
-                    PasswordHash = hasher.HashPassword(null, "Pa$$w0rd")
+                    PasswordHash = hasher.HashPassword(null, "Pa$$w0rd"),
+                    Founds=10000
                 };
 
                 var anita = new FoodUser()
@@ -99,7 +101,8 @@ namespace KUMF5H_ASP_2022232.Data
                     FoodUserName = "anita@gmail.com",
                     FirstName = "Anita",
                     LastName = "Koczó",
-                    PasswordHash = hasher.HashPassword(null, "password")
+                    PasswordHash = hasher.HashPassword(null, "password"),
+                    Founds = 10000
                 };
 
                 var tibi = new FoodUser()
@@ -127,7 +130,8 @@ namespace KUMF5H_ASP_2022232.Data
                     RequestorId = bence.Id,
                     Picture = this.LoadSeedPicture("Seed/susi.jpg"),
                     PictureContentType = "Image/jpeg",
-                    //Ingridients = new List<string> { "Hal","Rizs"}
+                    Deliveryoptions = "Uber",
+                    Payment=2000
 
                 };
 
@@ -140,7 +144,8 @@ namespace KUMF5H_ASP_2022232.Data
                     RequestorId = bence.Id,
                     Picture = this.LoadSeedPicture("Seed/steak.jpg"),
                     PictureContentType = "Image/jpeg",
-                    // Ingridients = new List<string> { "Marha", "Bors" }
+                    Deliveryoptions = "Uber",
+                    Payment = 3000
                 };
 
                 FoodRequest f3 = new FoodRequest()
@@ -152,7 +157,8 @@ namespace KUMF5H_ASP_2022232.Data
                     RequestorId = anita.Id,
                     Picture = this.LoadSeedPicture("Seed/toast.jpg"),
                     PictureContentType = "Image/jpeg",
-                    // Ingridients = new List<string> { "Tojás", "Kenyér" }
+                    Deliveryoptions = "No",
+                     Payment = 2000
                 };
 
                 FoodRequest f4 = new FoodRequest()
@@ -164,7 +170,8 @@ namespace KUMF5H_ASP_2022232.Data
                     RequestorId = anita.Id,
                     Picture = this.LoadSeedPicture("Seed/chokocake.jpg"),
                     PictureContentType = "Image/png",
-                    // Ingridients = new List<string> { "Chokolate", "vaj","List" }
+                    Deliveryoptions = "No",
+                     Payment = 3500
                 };
 
                 FoodRequest f5 = new FoodRequest()
@@ -176,7 +183,8 @@ namespace KUMF5H_ASP_2022232.Data
                     RequestorId = anita.Id,
                     Picture = this.LoadSeedPicture("Seed/mirrorcake.jpg"),
                     PictureContentType = "Image/jpeg",
-                    // Ingridients = new List<string> { "vaj", "List" }
+                    Deliveryoptions = "Uber",
+                    Payment = 2002 
                 };
 
                 builder.Entity<FoodRequest>().HasData(f, p2, f3, f4, f5);
