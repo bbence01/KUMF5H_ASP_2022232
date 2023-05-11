@@ -18,12 +18,12 @@ namespace KUMF5H_ASP_2022232.Models
             [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public string Id { get; set; }
 
-
-            [StringLength(100)]
+        [Required]
+        [StringLength(100)]
             public string Name { get; set; }
 
-
-            [StringLength(1000)]
+        [Required]
+        [StringLength(1000)]
             [MinLength(5)]
             public string Description { get; set; }
 
@@ -32,10 +32,10 @@ namespace KUMF5H_ASP_2022232.Models
             [DefaultValue(false)]
             public bool IsDone { get; set; }
 
-            [NotMapped]
-            public byte[] Picture { get; set; }
-
-            public string PictureContentType { get; set; }
+        [Required]
+        public byte[] Picture { get; set; }
+        [Required]    
+        public string PictureContentType { get; set; }
 
             [ForeignKey(nameof(FoodUser))]
             public string RequestorId { get; set; }
