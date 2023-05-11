@@ -1,18 +1,40 @@
 using KUMF5H_ASP_2022232.Data;
+using KUMF5H_ASP_2022232.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options
+    .UseSqlServer(connectionString)
+    .UseLazyLoadingProxies());
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddTransient<IFoodRequestRepository, FoodrequestRepository>();
+builder.Services.AddTransient<IOfferRepository, OfferRepository>();
+builder.Services.AddTransient<ICommentRepository, CommentRepository>();
+builder.Services.AddTransient<IFoodUserRepository, FoodUserRepository>();
+builder.Services.AddTransient<IingridientRepository, IngridientRepository>();
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<FoodUser>(options => {
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+})
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+
 
 var app = builder.Build();
 
