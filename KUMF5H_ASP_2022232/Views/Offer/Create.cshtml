@@ -1,0 +1,67 @@
+﻿@using KUMF5H_ASP_2022232.Data;
+@inject IFoodRequestRepository repo
+@model KUMF5H_ASP_2022232.Models.OfferViewModel
+
+@{
+    FoodRequest foodRequest = repo.GetOne(Model.FoodId);
+
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h4>Offer to complete @foodRequest.Name</h4>
+            <hr />
+            <div class="my-3">
+                @if (foodRequest.Offers.Count > 0)
+                {
+                    <span>The are pending offers </span>
+                }
+                else
+                {
+                    <span class="fst-italic">No Offers yet</span>
+                }
+            </div>
+
+
+            <div>
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label>Offer</label>
+                      
+                    
+                    </div>
+
+
+                    <input type="hidden" asp-for="FoodId" />
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Offer" class="btn btn-primary" />
+
+                        <a class="btn btn-secondary" href="@Url.Action("Details", "FoodRequest", new {id = foodRequest.Id})">Cancel</a>
+
+                    </div>
+
+                </form>
+            </div>
+
+
+        </div>
+
+
+        <div class="col-4">
+            <img class="img-fluid" src="@Url.Action("GetImage", "Foodrequest", new {id = foodRequest.Id})" />
+        </div>
+
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
