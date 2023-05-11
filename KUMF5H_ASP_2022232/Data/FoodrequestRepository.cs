@@ -27,24 +27,27 @@ namespace KUMF5H_ASP_2022232.Data
             return context.Foodrequests.FirstOrDefault(p => p.Id == id);
         }
 
-        public void Update(FoodRequest product)
+        public void Update(FoodRequest food)
         {
-            FoodRequest old = this.GetOne(product.Id);
-            old.IsDone = product.IsDone;
-            old.Description = product.Description;
-            old.Name = product.Name;
+            FoodRequest old = this.GetOne(food.Id);
+            old.IsDone = food.IsDone;
+            old.Description = food.Description;
+            old.Name = food.Name;
             this.context.SaveChanges();
         }
-        /*
+
+
+        public void Delete(FoodRequest food)
+        {
+            this.context.Foodrequests.Remove(food);
+            this.context.SaveChanges();
+        }
+
+
         public IEnumerable<FoodRequest> GetPurchasedItems(string userId)
         {
-            return this.GetAll().Where(p => p.IsDone && p.HighestBid != null && p.HighestBid.ContractorId == userId);
-        }*/
-
-        public void Delete(FoodRequest product)
-        {
-            this.context.Foodrequests.Remove(product);
-            this.context.SaveChanges();
+            return this.GetAll().Where(p => p.IsDone && p.Contractor != null && p.Contractor.Id == userId);
         }
+
     }
 }

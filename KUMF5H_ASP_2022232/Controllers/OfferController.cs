@@ -31,7 +31,7 @@ namespace KUMF5H_ASP_2022232.Controllers
             if (foodrequest != null)
             {
                 OfferViewModel vm = new OfferViewModel();
-                vm.FoodId = requestId;           
+                vm.FoodId = requestId;
                 return View(vm);
             }
             else
@@ -45,12 +45,12 @@ namespace KUMF5H_ASP_2022232.Controllers
         public IActionResult Create(OfferViewModel newOffer)
         {
             FoodRequest p = this.requestRepo.GetOne(newOffer.FoodId);
-            
-            if (ModelState.IsValid )
+
+            if (ModelState.IsValid)
             {
                 Offer offer = new Offer()
                 {
-                   
+
                     FoodId = newOffer.FoodId,
                     ContractorId = userManager.GetUserId(User)
                 };
@@ -61,5 +61,8 @@ namespace KUMF5H_ASP_2022232.Controllers
             }
             else { return View(newOffer); }
         }
+
+
+     
     }
 }

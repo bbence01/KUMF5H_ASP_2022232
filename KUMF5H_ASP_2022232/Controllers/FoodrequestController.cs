@@ -55,7 +55,7 @@ namespace KUMF5H_ASP_2022232.Controllers
 
             return new FileContentResult(f.Picture, f.PictureContentType);
         }
-  
+
 
 
         [HttpPost]
@@ -133,6 +133,27 @@ namespace KUMF5H_ASP_2022232.Controllers
 
         }
 
+        [Authorize]
+        public IActionResult ChooseOffer(string foodId)
+        {
+            var food = this.repository.GetOne(foodId);
+
+            if (food == null || food.Requestor.Id != userManager.GetUserId(User))
+                return RedirectToAction(nameof(Index));
+
+            food.IsDone = true;
+            this.repository.Update(food);
+
+            return RedirectToAction(nameof(Details), "FoodRequest", new { id = foodId });
+        }
+
+        [Authorize]
+        public IActionResult SeeAcceptedOffers()
+        {
+            var products = this.repository.SeeAcceptedOffers(userManager.GetUserId(User));
+
+            return View(products);
+        }
 
     }
 }
