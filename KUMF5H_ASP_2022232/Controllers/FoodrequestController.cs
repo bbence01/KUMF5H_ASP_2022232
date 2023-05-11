@@ -60,14 +60,14 @@ namespace KUMF5H_ASP_2022232.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(FoodRequestViewModel product, IFormFile picture)
+        public IActionResult Create(FoodRequestViewModel foodrequest, IFormFile picture)
         {
             if (ModelState.IsValid)
             {
                 FoodRequest n = new FoodRequest()
                 {
-                    Name = product.Name,
-                    Description = product.Description,
+                    Name = foodrequest.Name,
+                    Description = foodrequest.Description,
                     RequestorId = userManager.GetUserId(User),
                 };
                 using (var stream = picture.OpenReadStream())
@@ -81,7 +81,7 @@ namespace KUMF5H_ASP_2022232.Controllers
                 this.repository.Create(n);
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(foodrequest);
         }
 
 
@@ -98,7 +98,7 @@ namespace KUMF5H_ASP_2022232.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Edit(string id, FoodRequestViewModel product)
+        public async Task<IActionResult> Edit(string id, FoodRequestViewModel foodrequest)
         {
             if (ModelState.IsValid)
             {
@@ -107,18 +107,31 @@ namespace KUMF5H_ASP_2022232.Controllers
                 if (old.Requestor.Id != userManager.GetUserId(User) && !User.IsInRole("Admin"))
                     return RedirectToAction(nameof(Index));
 
-                old.Name = product.Name;
-                old.Description = product.Description;
-                old.IsDone = product.IsDone;
+                old.Name = foodrequest.Name;
+                old.Description = foodrequest.Description;
+                old.IsDone = foodrequest.IsDone;
 
                 this.repository.Update(old);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(product);
+            return View(foodrequest);
         }
 
+        [Authorize]
+        public IActionResult Delete(string id)
+        {
+            var foodrequest = this.repository.GetOne(id);
 
+            if (foodrequest != null && (foodrequest.Requestor.Id == userManager.GetUserId(User) || User.IsInRole("Admin")))
+            {
+                this.repository.Delete(foodrequest);
+            }
+
+            return RedirectToAction(nameof(Index));
+
+
+        }
 
 
     }
