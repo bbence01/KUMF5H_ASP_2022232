@@ -50,5 +50,13 @@ namespace KUMF5H_ASP_2022232.Data
             return context.Offers.Where(p => p.FoodId == id).ToList();
         }
 
+        public void Update(Offer offer)
+        {
+            Offer old = this.GetOne(offer.Id);
+            old.Choosen = offer.Choosen;
+           
+            this.context.SaveChanges();
+        }
+
     }
 }

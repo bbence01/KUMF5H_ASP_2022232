@@ -33,6 +33,7 @@ namespace KUMF5H_ASP_2022232.Data
             old.IsDone = food.IsDone;
             old.Description = food.Description;
             old.Name = food.Name;
+            old.Contractor = food.Contractor;
             this.context.SaveChanges();
         }
 

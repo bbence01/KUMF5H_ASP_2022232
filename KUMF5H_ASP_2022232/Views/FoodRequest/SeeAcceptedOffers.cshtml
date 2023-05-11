@@ -8,40 +8,42 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">My To do</h1>
-    <p>TO DO</p>
+    <h1 class="display-4">My Contracts</h1>
+    <p>View your food contracts.</p>
 </div>
 
-<div class="row row-cols-sm-2 row-cols-1 row-cols-lg-4 g-4">
-    @if (Model.Count() == 0)
-    {
-        <p>No Contracts .</p>
-    }
-    @foreach (var item in Model)
-    {
-        <div class="col">
-            <div class="card h-100">
-                <img class="card-img-top img-fluid" src="@Url.Action("GetImage", "FoodRequest", new {id = item.Id})" alt="" />
-                <div class="card-body">
-                    <h5 class="card-title">
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </h5>
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
-                    <blockquote class="blockquote mb-0">
-                        <footer class="blockquote-footer">
-                            <small class="text-muted">
-                                Sold by <cite title="Source Title">@item.Requestor.FirstName @item.Requestor.LastName[0].</cite>
-                            </small>
-                        </footer>
-                    </blockquote>
-                </div>
-                <div class="card-footer">
-                    <div class="float-end">
-                        <a asp-action="Details" class="stretched-link btn btn-primary" asp-route-id="@item.Id">Details</a>
+@if (!Model.Any())
+{
+    <p>No Contracts.</p>
+}
+else
+{
+    <div class="row row-cols-sm-2 row-cols-1 row-cols-lg-4 g-4">
+        @foreach (var item in Model.Where(fr => fr.Contractor.Id == UserManager.GetUserId(User)))
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img class="card-img-top img-fluid" src="@Url.Action("GetImage", "FoodRequest", new { id = item.Id })" alt="" />
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                        <blockquote class="blockquote mb-0">
+                            <footer class="blockquote-footer">
+                                <small class="text-muted">
+                                    Sold by <cite title="Source Title">@item.Requestor.FirstName @item.Requestor.LastName[0].</cite>
+                                </small>
+                            </footer>
+                        </blockquote>
                     </div>
-                  
+                    <div class="card-footer">
+                        <div class="float-end">
+                            <a asp-action="Details" class="stretched-link btn btn-primary" asp-route-id="@item.Id">Details</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}

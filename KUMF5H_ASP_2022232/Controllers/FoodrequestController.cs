@@ -156,7 +156,7 @@ namespace KUMF5H_ASP_2022232.Controllers
             fruser.Founds = fruser.Founds + food.Payment;
 
             this.foodrepository.Update(food);
-           
+            this.offerrepository.Update(offer);
 
             return RedirectToAction(nameof(Details), "FoodRequest", new { id = foodId });
         }

@@ -11,5 +11,7 @@ namespace KUMF5H_ASP_2022232.Data
         Offer GetOne(string id);
 
         List<Offer> GetOffersForRequest(string id);
+
+        void Update(Offer offer);
     }
 }
