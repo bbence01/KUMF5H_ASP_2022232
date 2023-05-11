@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KUMF5H_ASP_2022232.Controllers
 {
-    public class FoodrequestController : Controller
+    public class FoodRequestController : Controller
     {
         private readonly IFoodRequestRepository repository;
         private readonly UserManager<FoodUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public FoodrequestController(IFoodRequestRepository repository, UserManager<FoodUser> userManager, RoleManager<IdentityRole> roleManager)
+        public FoodRequestController(IFoodRequestRepository repository, UserManager<FoodUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.repository = repository;
             this.userManager = userManager;

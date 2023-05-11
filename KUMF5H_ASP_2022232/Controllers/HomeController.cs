@@ -21,7 +21,7 @@ namespace KUMF5H_ASP_2022232.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction(nameof(FoodrequestController.Index), "FoodRequest");
+            return RedirectToAction(nameof(FoodRequestController.Index), "FoodRequest");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -35,7 +35,7 @@ namespace KUMF5H_ASP_2022232.Controllers
         {
             var user = _userManager.Users.FirstOrDefault(t => t.Id == _userManager.GetUserId(User));
             await _userManager.RemoveFromRoleAsync(user, "Admin");
-            return RedirectToAction(nameof(FoodrequestController.Index), "FoodRequest");
+            return RedirectToAction(nameof(FoodRequestController.Index), "FoodRequest");
         }
 
         [Authorize]
@@ -43,7 +43,7 @@ namespace KUMF5H_ASP_2022232.Controllers
         {
             var user = _userManager.Users.FirstOrDefault(t => t.Id == _userManager.GetUserId(User));
             await _userManager.AddToRoleAsync(user, "Admin");
-            return RedirectToAction(nameof(FoodrequestController.Index), "FoodRequest");
+            return RedirectToAction(nameof(FoodRequestController.Index), "FoodRequest");
         }
     }
 }

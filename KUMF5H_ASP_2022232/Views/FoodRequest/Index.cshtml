@@ -1,0 +1,48 @@
+﻿@model IEnumerable<KUMF5H_ASP_2022232.Models.FoodRequest>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<FoodUser> SignInManager
+@inject UserManager<FoodUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Food For Request</h1>
+    <p>Get all the food you need from people you dont knwo</p>
+</div>
+
+<div class="text-center m-4">
+    <a class="btn btn-primary btn-lg text-capitalize" asp-action="Create">Start selling</a>
+</div>
+
+<div class="row row-cols-sm-2 row-cols-1 row-cols-lg-4 g-4">
+    @foreach (var item in Model) {
+        string? imgClass = item.IsDone ? "sold-img" : null;
+        <div class="col">
+            <div class="card h-100">
+                <img class="card-img-top img-fluid @imgClass" src="@Url.Action("GetImage", "FoodRequest", new {id = item.Id})" alt="" />
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @if(item.IsDone) {
+                            <span class="badge bg-danger">Done</span>
+                        }
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </h5>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                    <blockquote class="blockquote mb-0">
+                        <footer class="blockquote-footer">
+                            <small class="text-muted">
+                                Sold by <cite title="Source Title">@item.Requestor.FirstName @item.Requestor.LastName[0].</cite>
+                            </small>
+                        </footer>
+                    </blockquote>
+                </div>
+                <div class="card-footer">
+                  
+                  
+                </div>
+            </div>
+        </div>
+    }
+</div>
