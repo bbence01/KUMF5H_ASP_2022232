@@ -55,9 +55,9 @@ namespace KUMF5H_ASP_2022232.Controllers
 
             return new FileContentResult(f.Picture, f.PictureContentType);
         }
+  
 
 
-    
         [HttpPost]
         [Authorize]
         public IActionResult Create(FoodRequestViewModel product, IFormFile picture)
@@ -83,6 +83,41 @@ namespace KUMF5H_ASP_2022232.Controllers
             }
             return View(product);
         }
+
+
+        [Authorize]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var product = this.repository.GetOne(id);
+            if (product != null && (product.Requestor.Id == userManager.GetUserId(User) || User.IsInRole("Admin")))
+            {
+                return View(product);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(string id, FoodRequestViewModel product)
+        {
+            if (ModelState.IsValid)
+            {
+                var old = this.repository.GetOne(id);
+
+                if (old.Requestor.Id != userManager.GetUserId(User) && !User.IsInRole("Admin"))
+                    return RedirectToAction(nameof(Index));
+
+                old.Name = product.Name;
+                old.Description = product.Description;
+                old.IsDone = product.IsDone;
+
+                this.repository.Update(old);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(product);
+        }
+
 
 
 

@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model KUMF5H_ASP_2022232.Models.FoodRequest
+@inject UserManager<FoodUser> UserManager
+
+@{
+    ViewData["Title"] = "Details";
+  
+}
+
+<div class="container">
+    <div class="col d-block d-md-none">
+        <a href="@Url.Action("GetImage", "Product", new {id=Model.Id})">
+            <img class="img-fluid" src="@Url.Action("GetImage", "Product", new {id=Model.Id})" />
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <h1 class="text-capitalize">
+                @if (Model.IsDone)
+                {
+                    <span class="badge bg-danger">Sold</span>
+                }
+                @Html.DisplayFor(model => model.Name)
+            </h1>
+
+
+            <div class="my-3">
+                <blockquote class="blockquote">
+                    <footer class="blockquote-footer">
+                        <small class="text-muted">
+                            Sold by <cite title="Source Title">@Model.Requestor.FirstName @Model.Requestor.LastName[0].</cite>
+                        </small>
+                    </footer>
+                </blockquote>
+                @if (User.Identity.IsAuthenticated && (Model.RequestorId == UserManager.GetUserId(User) || await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin")))
+                {
+                    <a class="btn" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+                    <a class="btn btn-outline-danger btn-light" asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
+                }
+                <hr />
+                <div>
+                    <span class="fs-6 fw-bold">@Html.DisplayNameFor(model => model.Description)</span>
+                    <p>
+                        @Model.Description
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 d-none d-md-block">
+            <a href="@Url.Action("GetImage", "Product", new {id=Model.Id})">
+                <img class="img-fluid" src="@Url.Action("GetImage", "Product", new {id=Model.Id})" />
+            </a>
+        </div>
+       
+    
+    </div>
+    <a class="btn btn-secondary" asp-action="Index">< Back to the Market</a>
+</div>
+
+
