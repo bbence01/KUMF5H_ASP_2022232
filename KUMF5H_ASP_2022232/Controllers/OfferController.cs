@@ -32,6 +32,8 @@ namespace KUMF5H_ASP_2022232.Controllers
             {
                 OfferViewModel vm = new OfferViewModel();
                 vm.FoodId = requestId;
+                vm.Choosen = false;
+                
                 return View(vm);
             }
             else
@@ -44,7 +46,7 @@ namespace KUMF5H_ASP_2022232.Controllers
         [HttpPost]
         public IActionResult Create(OfferViewModel newOffer)
         {
-            FoodRequest p = this.requestRepo.GetOne(newOffer.FoodId);
+            FoodRequest f = this.requestRepo.GetOne(newOffer.FoodId);
 
             if (ModelState.IsValid)
             {

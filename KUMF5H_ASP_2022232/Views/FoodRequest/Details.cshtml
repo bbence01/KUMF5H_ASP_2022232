@@ -4,8 +4,10 @@
 
 @{
     ViewData["Title"] = "Details";
-  
+    List<Offer> offers = Model.Offers;
+    Offer choosen = offers.FirstOrDefault(y=> y.Choosen == true)!;
 }
+
 
 <div class="container">
 
@@ -79,17 +81,29 @@
                 <div class="d-inline-block align-top">
                     @if (Model.RequestorId == UserManager.GetUserId(User))
                     {
-                        @if (Model.Offers.Count > 0)
-                        {
-                            <a disabled class="btn btn-success btn-lg" href="@Url.Action("Accept", "FoodRequest", new {foodId=Model.Id})">Accept bid</a>
-                        }
+                       
                     }
                     else
                     {
-                        <a class="btn btn-primary btn-lg" href="@Url.Action("Create", "Offer", new {foodId=Model.Id})">New bid</a>
+                        <a class="btn btn-primary btn-lg" href="@Url.Action("Create", "Offer", new {requestId=Model.Id})">New Offer</a>
                     }
                 </div>
                
+            </div>
+            <div>
+                <h4>Offers:</h4>
+                <ul>
+                    @foreach (var offer in Model.Offers)
+                    {
+                        <li>
+                            @offer.ContractorId
+                            @if (!offer.Choosen && Model.RequestorId == UserManager.GetUserId(User))
+                            {
+                                <a disabled class="btn btn-success btn-lg" href="@Url.Action("ChooseOffer", "FoodRequest", new { foodId = Model.Id, offerId = offer.Id })">Accept Offer</a>
+                            }
+                        </li>
+                    }
+                </ul>
             </div>
         }
         else
