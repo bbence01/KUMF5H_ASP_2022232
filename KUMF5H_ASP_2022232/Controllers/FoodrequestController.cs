@@ -69,6 +69,8 @@ namespace KUMF5H_ASP_2022232.Controllers
                     Name = foodrequest.Name,
                     Description = foodrequest.Description,
                     RequestorId = userManager.GetUserId(User),
+                    Payment = foodrequest.Payment,
+                    Deliveryoptions = foodrequest.Deliveryoptions
                 };
                 using (var stream = picture.OpenReadStream())
                 {
@@ -110,7 +112,8 @@ namespace KUMF5H_ASP_2022232.Controllers
                 old.Name = foodrequest.Name;
                 old.Description = foodrequest.Description;
                 old.IsDone = foodrequest.IsDone;
-
+                old.Payment = foodrequest.Payment;
+                old.Deliveryoptions = foodrequest.Deliveryoptions;
                 this.repository.Update(old);
                 return RedirectToAction(nameof(Index));
             }

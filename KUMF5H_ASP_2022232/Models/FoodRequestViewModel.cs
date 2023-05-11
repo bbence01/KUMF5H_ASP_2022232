@@ -19,5 +19,9 @@ namespace KUMF5H_ASP_2022232.Models
         [DefaultValue(false)]
         public bool IsDone { get; set; }
 
+        [Range(1, int.MaxValue)]
+        public int Payment  {get; set; }
+
+        public string Deliveryoptions { get; set; }
     }
 }
