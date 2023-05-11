@@ -21,7 +21,6 @@ builder.Services.AddTransient<IFoodUserRepository, FoodUserRepository>();
 builder.Services.AddTransient<IingridientRepository, IngridientRepository>();
 
 
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<FoodUser>(options => {
     options.SignIn.RequireConfirmedAccount = false;
@@ -60,7 +59,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=FoodRequest}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
