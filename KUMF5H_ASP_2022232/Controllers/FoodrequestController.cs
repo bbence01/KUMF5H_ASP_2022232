@@ -43,13 +43,23 @@ namespace KUMF5H_ASP_2022232.Controllers
         }
 
 
-      
 
-    
+        [HttpGet("Image")]
+        public IActionResult GetImage(string id)
+        {
+            FoodRequest f = this.repository.GetOne(id);
+            if (f == null)
+            {
+                return NotFound();
+            }
+
+            return new FileContentResult(f.Picture, f.PictureContentType);
+        }
 
 
-   
 
- 
+
+
+
     }
 }
