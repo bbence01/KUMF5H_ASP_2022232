@@ -57,7 +57,32 @@ namespace KUMF5H_ASP_2022232.Controllers
         }
 
 
+    
+        [HttpPost]
+        [Authorize]
+        public IActionResult Create(FoodRequestViewModel product, IFormFile picture)
+        {
+            if (ModelState.IsValid)
+            {
+                FoodRequest n = new FoodRequest()
+                {
+                    Name = product.Name,
+                    Description = product.Description,
+                    RequestorId = userManager.GetUserId(User),
+                };
+                using (var stream = picture.OpenReadStream())
+                {
+                    byte[] buffer = new byte[picture.Length];
+                    stream.Read(buffer, 0, (int)picture.Length);
+                    n.Picture = buffer;
+                    n.PictureContentType = picture.ContentType;
+                }
 
+                this.repository.Create(n);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
 
 
 
