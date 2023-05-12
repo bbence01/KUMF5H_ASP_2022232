@@ -4,33 +4,37 @@
 @inject UserManager<FoodUser> UserManager
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";    
+    Layout = "_Layout";
+
 }
 
 <div class="text-center">
     <h1 class="display-4">Food For Request</h1>
-    <p>Get all the food you need from people you dont knwo</p>
+    <p>Get all the food you need from people you don't know</p>
 </div>
 
-<div class="text-center m-4">
-    <a class="btn btn-primary btn-lg text-capitalize" asp-action="Create">Food!</a>
+<div class="text-right m-4">
+    <a class="btn btn-primary btn-lg text-capitalize" asp-action="Create">Request Food!</a>
 </div>
 
 <div class="row row-cols-sm-2 row-cols-1 row-cols-lg-4 g-4">
 
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
 
         string? imgClass = item.IsDone ? "done-img" : null;
 
         <div class="col">
             <div class="card h-100">
 
-                <img class="card-img-top img-fluid @imgClass" src="@Url.Action("GetImage", "FoodRequest", new {id = item.Id})" alt="" />
+                <img class="card-img-top img-fluid @imgClass" src="@Url.Action("GetImage", "FoodRequest", new {id = item.Id})" alt="@item.Name" />
 
                 <div class="card-body">
 
                     <h5 class="card-title">
-                        @if(item.IsDone) {
+                        @if (item.IsDone)
+                        {
                             <span class="badge bg-danger">Done</span>
                         }
                         @Html.DisplayFor(modelItem => item.Name)
@@ -41,7 +45,7 @@
                     <blockquote class="blockquote mb-0">
                         <footer class="blockquote-footer">
                             <small class="text-muted">
-                                Reguested by <cite title="Source Title">@item.Requestor.FirstName @item.Requestor.LastName[0].</cite>
+                                Requested by <cite title="Source Title">@item.Requestor.FirstName @item.Requestor.LastName[0].</cite>
                             </small>
                         </footer>
                     </blockquote>
@@ -49,9 +53,8 @@
                 </div>
                 <div class="card-footer">
                     <div class="float-end">
-                        <a asp-action="Details" class="stretched-link btn btn-primary" asp-route-id="@item.Id">Details</a>
+                        <a asp-action="Details" class="stretched-link btn btn-primary" asp-route-id="@item.Id">View Details</a>
                     </div>
-                  
                 </div>
 
             </div>

@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\KUMF5H_ASP_2022232.styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.14" />
@@ -19,6 +23,10 @@
 
   <ItemGroup>
     <Folder Include="Seed\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\KUMF5H_ASP_2022232.styles.css" />
   </ItemGroup>
 
 </Project>

@@ -23,12 +23,16 @@ else
         {
             <div class="col">
                 <div class="card h-100">
+
                     <img class="card-img-top img-fluid" src="@Url.Action("GetImage", "FoodRequest", new { id = item.Id })" alt="" />
                     <div class="card-body">
+
                         <h5 class="card-title">
                             @Html.DisplayFor(modelItem => item.Name)
                         </h5>
+
                         <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+
                         <blockquote class="blockquote mb-0">
                             <footer class="blockquote-footer">
                                 <small class="text-muted">
@@ -36,12 +40,15 @@ else
                                 </small>
                             </footer>
                         </blockquote>
+
                     </div>
+
                     <div class="card-footer">
                         <div class="float-end">
                             <a asp-action="Details" class="stretched-link btn btn-primary" asp-route-id="@item.Id">Details</a>
                         </div>
                     </div>
+
                 </div>
             </div>
         }
