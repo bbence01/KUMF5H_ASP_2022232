@@ -145,23 +145,22 @@ namespace KUMF5H_ASP_2022232.Controllers
         {
             var food = this.foodrepository.GetOne(foodId);
             var offer = this.offerrepository.GetOne(offerId);
-            var fruser = this.foodUserRepository.GetFooduserById(offer.ContractorId);
+            var contractor = this.foodUserRepository.GetFooduserById(offer.ContractorId);
             var requestor = this.foodUserRepository.GetFooduserById(userManager.GetUserId(User));
 
 
             if (food == null || food.Requestor.Id != userManager.GetUserId(User))
                 return RedirectToAction(nameof(Index));
 
-            food.IsDone = true;
-            food.Contractor = fruser;
+            food.InProgress = true;
             offer.Choosen = true;
-            fruser.Founds = fruser.Founds + food.Payment;
-
-            requestor.Founds = requestor.Founds - food.Payment;
+            food.Contractor = contractor;
+            
+          
 
             this.foodrepository.Update(food);
             this.offerrepository.Update(offer);
-          
+
 
             return RedirectToAction(nameof(Details), "FoodRequest", new { id = foodId });
         }
@@ -173,6 +172,57 @@ namespace KUMF5H_ASP_2022232.Controllers
 
             return View(foodrequest);
         }
+
+
+        [Authorize]
+        public IActionResult CompleteRequest(string foodId)
+        {
+            var food = this.foodrepository.GetOne(foodId);
+            var chosenOffer = food.Offers.FirstOrDefault(o => o.Choosen);
+            var requestor = this.foodUserRepository.GetFooduserById(food.RequestorId);
+            var contractor = this.foodUserRepository.GetFooduserById(userManager.GetUserId(User));
+
+            if (food == null || chosenOffer.ContractorId != userManager.GetUserId(User))
+                return RedirectToAction(nameof(Index));
+
+
+            contractor.Founds = contractor.Founds + food.Payment;
+
+            requestor.Founds = requestor.Founds - food.Payment;
+
+            food.IsDone = true;
+            this.foodrepository.Update(food);
+
+            return RedirectToAction(nameof(Details), "FoodRequest", new { id = foodId });
+        }
+
+
+        [Authorize]
+        public IActionResult CancelRequest(string foodId)
+        {
+            var food = this.foodrepository.GetOne(foodId);
+            var chosenOffer = food.Offers.FirstOrDefault(o => o.Choosen);
+
+            if (food == null || (food.RequestorId != userManager.GetUserId(User) && chosenOffer.ContractorId != userManager.GetUserId(User)))
+                return RedirectToAction(nameof(Index));
+
+            food.IsDone = false;
+            food.InProgress = false;
+            food.Contractor = null;
+
+           
+            if (chosenOffer != null)
+            {
+                chosenOffer.Choosen = false;
+                this.offerrepository.Update(chosenOffer);
+            }
+
+            this.foodrepository.Update(food);
+
+            return RedirectToAction(nameof(Details), "FoodRequest", new { id = foodId });
+        }
+
+
 
     }
 }

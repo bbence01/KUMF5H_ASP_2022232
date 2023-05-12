@@ -33,7 +33,11 @@ namespace KUMF5H_ASP_2022232.Models
         public string Deliveryoptions { get; set; }
 
         [DefaultValue(false)]
-            public bool IsDone { get; set; }
+        public bool IsDone { get; set; }
+
+        [DefaultValue(false)]
+        public bool InProgress { get; set; }
+
 
         [Required]
         public byte[] Picture { get; set; }

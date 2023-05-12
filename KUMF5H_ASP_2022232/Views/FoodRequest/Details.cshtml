@@ -75,7 +75,7 @@
             </a>
         </div>
 
-        @if (!Model.IsDone)
+        @if (!Model.IsDone && !Model.InProgress)
         {
             <div class="mb-4">
                 <div class="d-inline-block align-top">
@@ -101,16 +101,50 @@
                             {
                                 <a disabled class="btn btn-success btn-lg" href="@Url.Action("ChooseOffer", "FoodRequest", new { foodId = Model.Id, offerId = offer.Id })">Accept Offer</a>
                             }
+                            @if (offer.Choosen && Model.RequestorId == UserManager.GetUserId(User))
+                            {
+                                <a disabled class="btn btn-success btn-lg" href="@Url.Action("CancelRequest", "FoodRequest", new { foodId = Model.Id })">Cancel Offer</a>
+                            }
                         </li>
                     }
                 </ul>
             </div>
         }
+        else if (Model.InProgress)
+        {
+            <div class="my-3 fw-bold">
+                In Progress
+            </div>
+
+            @if (Model.Offers.FirstOrDefault(o => o.Choosen).ContractorId == UserManager.GetUserId(User))
+            {
+                <div class="mb-4">
+                    <div class="d-inline-block align-top">
+                        <a class="btn btn-success btn-lg" href="@Url.Action("CompleteRequest", "FoodRequest", new { foodId = Model.Id })">Complete Request</a>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="d-inline-block align-top">
+                        <a class="btn btn-danger btn-lg" href="@Url.Action("CancelRequest", "FoodRequest", new { id = Model.Id })">Cancel Request</a>
+                    </div>
+                </div>
+            }
+            else if (Model.RequestorId == UserManager.GetUserId(User))
+            {
+
+                <div class="mb-4">
+                    <div class="d-inline-block align-top">
+                        <a class="btn btn-danger btn-lg" href="@Url.Action("CancelRequest", "FoodRequest", new { id = Model.Id })">Cancel Request</a>
+                    </div>
+                </div>
+            }
+        }
         else
         {
             <div class="my-3 fw-bold">
-               Done
+                Done
             </div>
+
         }
     
     </div>
