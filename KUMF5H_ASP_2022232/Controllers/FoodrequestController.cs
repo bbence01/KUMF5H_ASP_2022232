@@ -146,6 +146,8 @@ namespace KUMF5H_ASP_2022232.Controllers
             var food = this.foodrepository.GetOne(foodId);
             var offer = this.offerrepository.GetOne(offerId);
             var fruser = this.foodUserRepository.GetFooduserById(offer.ContractorId);
+            var requestor = this.foodUserRepository.GetFooduserById(userManager.GetUserId(User));
+
 
             if (food == null || food.Requestor.Id != userManager.GetUserId(User))
                 return RedirectToAction(nameof(Index));
@@ -155,8 +157,11 @@ namespace KUMF5H_ASP_2022232.Controllers
             offer.Choosen = true;
             fruser.Founds = fruser.Founds + food.Payment;
 
+            requestor.Founds = requestor.Founds - food.Payment;
+
             this.foodrepository.Update(food);
             this.offerrepository.Update(offer);
+          
 
             return RedirectToAction(nameof(Details), "FoodRequest", new { id = foodId });
         }

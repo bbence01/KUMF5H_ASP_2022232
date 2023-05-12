@@ -47,7 +47,11 @@ namespace KUMF5H_ASP_2022232.Data
 
         public IEnumerable<FoodRequest> SeeAcceptedOffers(string userId)
         {
-            return this.GetAll().Where(p => p.IsDone && p.Contractor != null && p.Contractor.Id == userId);
+            // return this.GetAll().Where(p => p.IsDone && p.Contractor != null && p.Contractor.Id == userId);
+
+            // return this.GetAll().Where(p => p.Offers.Where(x => x.Choosen == true && x.ContractorId == userId ) );
+
+             return this.GetAll().Where(p => p.Offers.Any(x=> x.Choosen == true && x.ContractorId == userId ) );
         }
 
     }

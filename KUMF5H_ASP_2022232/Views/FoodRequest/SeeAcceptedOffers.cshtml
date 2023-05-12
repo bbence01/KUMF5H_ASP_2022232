@@ -19,7 +19,7 @@
 else
 {
     <div class="row row-cols-sm-2 row-cols-1 row-cols-lg-4 g-4">
-        @foreach (var item in Model.Where(fr => fr.Contractor.Id == UserManager.GetUserId(User)))
+        @foreach (var item in Model)
         {
             <div class="col">
                 <div class="card h-100">
