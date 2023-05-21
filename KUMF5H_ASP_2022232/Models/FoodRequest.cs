@@ -30,6 +30,7 @@ namespace KUMF5H_ASP_2022232.Models
         [Range(1, int.MaxValue)]
         public int Payment { get; set; }
 
+        [DefaultValue("No")]
         public string Deliveryoptions { get; set; }
 
         [DefaultValue(false)]

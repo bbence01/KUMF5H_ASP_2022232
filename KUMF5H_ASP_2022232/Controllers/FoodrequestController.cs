@@ -155,8 +155,8 @@ namespace KUMF5H_ASP_2022232.Controllers
             food.InProgress = true;
             offer.Choosen = true;
             food.Contractor = contractor;
-            
-          
+
+
 
             this.foodrepository.Update(food);
             this.offerrepository.Update(offer);
@@ -169,6 +169,15 @@ namespace KUMF5H_ASP_2022232.Controllers
         public IActionResult SeeAcceptedOffers()
         {
             var foodrequest = this.foodrepository.SeeAcceptedOffers(userManager.GetUserId(User));
+
+            return View(foodrequest);
+        }
+
+
+        [Authorize]
+        public IActionResult SeeOtherAcceptedOffers(string id)
+        {
+            var foodrequest = this.foodrepository.SeeAcceptedOffers(id);
 
             return View(foodrequest);
         }
@@ -201,7 +210,7 @@ namespace KUMF5H_ASP_2022232.Controllers
         public IActionResult CancelRequest(string foodId)
         {
             var food = this.foodrepository.GetOne(foodId);
-            var chosenOffer = food.Offers.FirstOrDefault(o => o.Choosen);
+            var chosenOffer = food.Offers.Where(x=>x.Choosen==true).First();
 
             if (food == null || (food.RequestorId != userManager.GetUserId(User) && chosenOffer.ContractorId != userManager.GetUserId(User)))
                 return RedirectToAction(nameof(Index));
@@ -210,7 +219,7 @@ namespace KUMF5H_ASP_2022232.Controllers
             food.InProgress = false;
             food.Contractor = null;
 
-           
+
             if (chosenOffer != null)
             {
                 chosenOffer.Choosen = false;

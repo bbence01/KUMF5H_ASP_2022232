@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.ComponentModel;
 
 namespace KUMF5H_ASP_2022232.Models
 {
@@ -13,6 +14,7 @@ namespace KUMF5H_ASP_2022232.Models
         public string Id { get; set; }
 
 
+        [DefaultValue(false)]
         public bool Choosen { get; set; }
 
 

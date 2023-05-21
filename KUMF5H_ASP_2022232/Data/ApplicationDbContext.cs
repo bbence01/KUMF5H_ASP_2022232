@@ -86,10 +86,12 @@ namespace KUMF5H_ASP_2022232.Data
                     UserName = "bence@gmail.com",
                     NormalizedUserName = "BENCE@GMAIL.COM",
                     FoodUserName = "bence@gmail.com",
+                    Email = "bence@gmail.com",
                     FirstName = "Bence",
                     LastName = "Bognár",
                     PasswordHash = hasher.HashPassword(null, "Pa$$w0rd"),
                     Founds=10000
+                    
                 };
 
                 var anita = new FoodUser()
@@ -99,6 +101,7 @@ namespace KUMF5H_ASP_2022232.Data
                     EmailConfirmed = true,
                     NormalizedUserName = "ANITA@GMAIL.COM",
                     FoodUserName = "anita@gmail.com",
+                    Email = "anita@gmail.com",
                     FirstName = "Anita",
                     LastName = "Koczó",
                     PasswordHash = hasher.HashPassword(null, "password"),
@@ -113,7 +116,7 @@ namespace KUMF5H_ASP_2022232.Data
                     EmailConfirmed = true,
                     NormalizedUserName = "TIBI@GMAIL.COM",
                     FoodUserName = "tibi@gmail.com",
-
+                    Email= "tibi@gmail.com",
                     FirstName = "Tibor",
                     LastName = "Bognár",
                     PasswordHash = hasher.HashPassword(null, "password")
@@ -135,7 +138,7 @@ namespace KUMF5H_ASP_2022232.Data
 
                 };
 
-                FoodRequest p2 = new FoodRequest()
+                FoodRequest f2 = new FoodRequest()
                 {
                     Id = Guid.NewGuid().ToString(),
 
@@ -187,7 +190,7 @@ namespace KUMF5H_ASP_2022232.Data
                     Payment = 2002 
                 };
 
-                builder.Entity<FoodRequest>().HasData(f, p2, f3, f4, f5);
+                builder.Entity<FoodRequest>().HasData(f, f2, f3, f4, f5);
 
                 Offer o1 = new Offer()
                 {

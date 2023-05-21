@@ -44,6 +44,7 @@
                     <a class="btn" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
                     <a class="btn btn-outline-danger btn-light" asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
                 }
+
                 <hr />
 
                 <div>
@@ -54,11 +55,13 @@
                 </div>
 
                 <div>
+
                     <span class="fs-6 fw-bold">@Html.DisplayNameFor(model => model.Deliveryoptions)</span>
                     <p>
                         @Model.Deliveryoptions
                     </p>
                 </div>
+
                 <div>
                     <span class="fs-6 fw-bold">@Html.DisplayNameFor(model => model.Payment)</span>
                     <p>
@@ -95,8 +98,10 @@
                 <ul>
                     @foreach (var offer in Model.Offers)
                     {
+                        var contractor = await UserManager.FindByIdAsync(offer.ContractorId);
                         <li>
-                            @offer.ContractorId
+                            <a href="@Url.Action("SeeOtherAcceptedOffers", "FoodRequest", new { id = contractor.Id })">@contractor.Email</a>
+
                             @if (!offer.Choosen && Model.RequestorId == UserManager.GetUserId(User))
                             {
                                 <a disabled class="btn btn-success btn-lg" href="@Url.Action("ChooseOffer", "FoodRequest", new { foodId = Model.Id, offerId = offer.Id })">Accept Offer</a>
@@ -123,9 +128,10 @@
                         <a class="btn btn-success btn-lg" href="@Url.Action("CompleteRequest", "FoodRequest", new { foodId = Model.Id })">Complete Request</a>
                     </div>
                 </div>
+
                 <div class="mb-4">
                     <div class="d-inline-block align-top">
-                        <a class="btn btn-danger btn-lg" href="@Url.Action("CancelRequest", "FoodRequest", new { id = Model.Id })">Cancel Request</a>
+                        <a class="btn btn-danger btn-lg" href="@Url.Action("CancelRequest", "FoodRequest", new { foodId = Model.Id })">Cancel Request</a>
                     </div>
                 </div>
             }
@@ -134,7 +140,7 @@
 
                 <div class="mb-4">
                     <div class="d-inline-block align-top">
-                        <a class="btn btn-danger btn-lg" href="@Url.Action("CancelRequest", "FoodRequest", new { id = Model.Id })">Cancel Request</a>
+                        <a class="btn btn-danger btn-lg" href="@Url.Action("CancelRequest", "FoodRequest", new { foodId = Model.Id })">Cancel Request</a>
                     </div>
                 </div>
             }

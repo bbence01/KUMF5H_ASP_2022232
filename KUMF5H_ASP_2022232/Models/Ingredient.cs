@@ -12,11 +12,11 @@ namespace KUMF5H_ASP_2022232.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
 
-
+        [Required]
         public string Name { get; set; }
 
 
-
+        [Required]
         public string Description { get; set; }
 
 
